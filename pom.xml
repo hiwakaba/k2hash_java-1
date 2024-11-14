@@ -174,7 +174,13 @@
               <goals>
                 <goal>site</goal>
               </goals>
-              <phase>site</phase>
+              <!-- select the Maven phase in which the plugin will be executed -->
+              <phase>site-deploy</phase>
+              <configuration>
+                <server>github</server>
+                <message>Building site for my project</message>
+                <merge>true</merge>
+              </configuration>
             </execution>
           </executions>
         </plugin>
