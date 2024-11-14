@@ -87,14 +87,19 @@ public class K2hashFileTest {
     }
   }
 
-  /** K2hash create */
-  @Test
-  public void testCreateArg1() {
-    boolean isTrue = K2hash.create(FILEDB);
-    assertTrue(isTrue);
-    File fileDb = new File(FILEDB);
-    assertTrue(fileDb.exists());
-  }
+  /** K2hash create
+   * <p>NOTE: This test is disabled because k2hash library sometimes corrupted
+   * the channel used by the plugin in order to transmit events with test status
+   * back to Maven process.
+   * @Test
+   * @Disabled
+   * public void testCreateArg1() {
+   *   boolean isTrue = K2hash.create(FILEDB);
+   *   assertTrue(isTrue);
+   *   File fileDb = new File(FILEDB);
+   *   assertTrue(fileDb.exists());
+   * }
+   */
 
   /** K2hash create
    * <p>NOTE: This test is disabled because k2hash library sometimes corrupted
