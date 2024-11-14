@@ -33,6 +33,8 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: ${{ matrix.java }}
+        gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }} # Value of the GPG private key to import
+        gpg-passphrase: MAVEN_GPG_PASSPHRASE # env variable for GPG private key passphrase
 
     - name: Set environments
       run: |
@@ -52,11 +54,17 @@ jobs:
       if: "matrix.java == '8'"
       run: |
         mvn ${{ env.COMMON_MAVEN_OPTS }} -Dmaven.compiler.target=8 package
+      env:
+        MAVEN_CENTRAL_TOKEN: ${{ secrets.OSSRH_PASSWORD }}
+        MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
 
     - name: Run package on version other than 8
       if: "matrix.java != '8'"
       run: |
         mvn ${{ env.COMMON_MAVEN_OPTS }} -Dmaven.compiler.target=${{ matrix.java }} -Dmaven.compiler.source=${{ matrix.java }} -Dmaven.compiler.release=${{ matrix.java }} package
+      env:
+        MAVEN_CENTRAL_TOKEN: ${{ secrets.OSSRH_PASSWORD }}
+        MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
 
     - name: Run javadoc
       run: |
